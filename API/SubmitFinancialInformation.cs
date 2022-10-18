@@ -3,19 +3,19 @@ using Microsoft.Azure.Functions.Worker;
 using Microsoft.Azure.Functions.Worker.Http;
 using Microsoft.Extensions.Logging;
 
-namespace cloud_databases_assignment
+namespace LKenselaar.CloudDatabases.API
 {
-    public class GetHouses
+    public class SubmitFinancialInformation
     {
         private readonly ILogger _logger;
 
-        public GetHouses(ILoggerFactory loggerFactory)
+        public SubmitFinancialInformation(ILoggerFactory loggerFactory)
         {
-            _logger = loggerFactory.CreateLogger<GetHouses>();
+            _logger = loggerFactory.CreateLogger<SubmitFinancialInformation>();
         }
 
-        [Function("GetHouses")]
-        public HttpResponseData Run([HttpTrigger(AuthorizationLevel.Function, "get")] HttpRequestData req)
+        [Function("SubmitFinancialInformation")]
+        public HttpResponseData Run([HttpTrigger(AuthorizationLevel.Anonymous, "post")] HttpRequestData req)
         {
             _logger.LogInformation("C# HTTP trigger function processed a request.");
 
