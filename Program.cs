@@ -1,7 +1,24 @@
+using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Hosting;
 
-var host = new HostBuilder()
-    .ConfigureFunctionsWorkerDefaults()
-    .Build();
+namespace LKenselaar.CloudDatabases
+{
+    public class Program
+    {
+        public static void Main()
+        {
+            var host = new HostBuilder()
+                .ConfigureFunctionsWorkerDefaults()
+                .ConfigureServices(services =>
+                {
+                    services.AddAutoMapper(typeof(Program));
+                })
+                .Build();
 
-host.Run();
+            host.Run();
+        }
+    }
+}
+
+
+
