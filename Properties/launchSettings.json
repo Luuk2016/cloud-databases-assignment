@@ -1,0 +1,9 @@
+{
+  "profiles": {
+    "cloud_databases_assignment": {
+      "commandName": "Project",
+      "commandLineArgs": "--port 7296",
+      "launchBrowser": false
+    }
+  }
+}
