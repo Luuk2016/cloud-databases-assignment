@@ -2,7 +2,6 @@ using System.Net;
 using AutoMapper;
 using LKenselaar.CloudDatabases.Models.DTO;
 using LKenselaar.CloudDatabases.Services;
-using LKenselaar.CloudDatabases.Services.Interfaces;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.Azure.Functions.Worker;
 using Microsoft.Azure.Functions.Worker.Http;
@@ -17,6 +16,7 @@ namespace LKenselaar.CloudDatabases.API.Controllers
         private readonly ILogger<UserController> _logger;
         private readonly MortgageService _mortgageService;
         private readonly IMapper _mapper;
+
         public MortgageController(ILogger<UserController> log, MortgageService mortgageService, IMapper mapper)
         {
             _logger = log ?? throw new ArgumentNullException(nameof(log));

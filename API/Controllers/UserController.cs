@@ -25,7 +25,6 @@ namespace LKenselaar.CloudDatabases.API.Controllers
             _mapper = mapper ?? throw new ArgumentNullException(nameof(mapper));
         }
 
-
         [Function("CreateUser")]
         [OpenApiOperation(operationId: "CreateUser", tags: new[] { "CreateUser" }, Summary = "Create a new user", Description = "This endpoint allows the creation of a new user.")]
         [OpenApiRequestBody("application/json", typeof(CreateUserRequestDTO), Description = "The user data.")]

@@ -1,25 +1,26 @@
-using LKenselaar.CloudDatabases.Services.Interfaces;
+using cloud_databases_assignment.Services.Interfaces;
+using LKenselaar.CloudDatabases.API.Controllers;
 using Microsoft.Azure.Functions.Worker;
 using Microsoft.Extensions.Logging;
 using Timer = LKenselaar.CloudDatabases.Models.Timer;
 
-namespace cloud_databases_assignment.API.TimerTriggers
+namespace LKenselaar.CloudDatabases.API.TimerTriggers
 {
     public class MailResultsTimer
     {
-        private readonly ILogger<MailResultsTimer> _logger;
-        private readonly IUserService _userService;
+        private readonly ILogger<UserController> _logger;
+        private readonly IMailService _mailService;
 
-        public MailResultsTimer(ILogger<MailResultsTimer> logger, IUserService userService)
+        public MailResultsTimer(ILogger<UserController> log, IMailService mailService)
         {
-            _logger = logger ?? throw new ArgumentNullException(nameof(logger));
-            _userService = userService ?? throw new ArgumentNullException(nameof(userService));
+            _logger = log ?? throw new ArgumentNullException(nameof(log));
+            _mailService = mailService ?? throw new ArgumentNullException(nameof(mailService));
         }
 
         [Function("MailResults")]
         public void Run([TimerTrigger("0 0 8 * * *")] Timer timer)
         {
-            _logger.LogInformation($"C# Timer trigger function executed at: {DateTime.Now}");
+            _mailService.MailAllUsers();
         }
     }
 }

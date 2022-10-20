@@ -5,5 +5,6 @@ namespace LKenselaar.CloudDatabases.Models
     {
         public double? MaximumMortgage { get; set; }
         public Guid UserId { get; set; }
+        public bool MailSend { get; set; }
     }
 }

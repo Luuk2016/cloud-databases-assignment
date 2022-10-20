@@ -2,7 +2,7 @@ using LKenselaar.CloudDatabases.Services.Interfaces;
 using Microsoft.Azure.Functions.Worker;
 using Microsoft.Extensions.Logging;
 
-namespace cloud_databases_assignment.API.TimerTriggers
+namespace LKenselaar.CloudDatabases.API.TimerTriggers
 {
     public class ProcessFinancialInformationTimer
     {
