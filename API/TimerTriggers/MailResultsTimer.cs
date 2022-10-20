@@ -1,5 +1,4 @@
-using cloud_databases_assignment.API.Controllers;
-using LKenselaar.CloudDatabases.Services;
+using LKenselaar.CloudDatabases.Services.Interfaces;
 using Microsoft.Azure.Functions.Worker;
 using Microsoft.Extensions.Logging;
 using Timer = LKenselaar.CloudDatabases.Models.Timer;
@@ -9,9 +8,9 @@ namespace cloud_databases_assignment.API.TimerTriggers
     public class MailResultsTimer
     {
         private readonly ILogger<MailResultsTimer> _logger;
-        private readonly UserService _userService;
+        private readonly IUserService _userService;
 
-        public MailResultsTimer(ILogger<MailResultsTimer> logger, UserService userService)
+        public MailResultsTimer(ILogger<MailResultsTimer> logger, IUserService userService)
         {
             _logger = logger ?? throw new ArgumentNullException(nameof(logger));
             _userService = userService ?? throw new ArgumentNullException(nameof(userService));

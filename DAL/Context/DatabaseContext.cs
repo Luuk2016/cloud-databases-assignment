@@ -9,7 +9,6 @@ namespace LKenselaar.CloudDatabases.DAL.Context
         private readonly FunctionConfiguration _config;
 
         public DbSet<User> Users { get; set; }
-        public DbSet<Mortgage> Mortgages { get; set; }
 
         public DatabaseContext(FunctionConfiguration config)
         {
@@ -19,8 +18,7 @@ namespace LKenselaar.CloudDatabases.DAL.Context
         protected override void OnModelCreating(ModelBuilder modelBuilder)
         {
             modelBuilder.ApplyConfiguration(new UserEntityTypeConfiguration());
-/*            modelBuilder.ApplyConfiguration(new MortgageEntityTypeConfiguration());
-*/        }
+        }
 
         protected override void OnConfiguring(DbContextOptionsBuilder optionsBuilder)
         {

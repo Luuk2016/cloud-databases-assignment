@@ -4,5 +4,6 @@ namespace LKenselaar.CloudDatabases.Services.Interfaces
 {
     public interface IUserService : IBaseService<User>
     {
+        public Task UpdateMortgages();
     }
 }

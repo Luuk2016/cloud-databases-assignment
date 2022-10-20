@@ -10,7 +10,7 @@ using Microsoft.Azure.WebJobs.Extensions.OpenApi.Core.Attributes;
 using Microsoft.Extensions.Logging;
 using Newtonsoft.Json;
 
-namespace cloud_databases_assignment.API.Controllers
+namespace LKenselaar.CloudDatabases.API.Controllers
 {
     public class UserController
     {
@@ -42,7 +42,7 @@ namespace cloud_databases_assignment.API.Controllers
                 var requestBodyData = JsonConvert.DeserializeObject<CreateUserRequestDTO>(requestBody);
 
                 // Map DTO to Entity
-                var user = _mapper.Map<User>(requestBodyData);
+                User user = _mapper.Map<User>(requestBodyData);
 
                 var createdUser = await _userService.Create(user);
 

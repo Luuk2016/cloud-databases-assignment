@@ -12,5 +12,33 @@ namespace LKenselaar.CloudDatabases.Services
         {
             return await _repository.Create(user);
         }
+
+        public async Task UpdateMortgages()
+        {
+            var users = await _repository.GetAll();
+
+            foreach (var user in users.ToList())
+            {
+                double calculatedMaximumMortgage = user.AnnualIncome * 5;
+
+                if (user.Mortgage == null)
+                {
+                    Mortgage mortgage = new Mortgage()
+                    {
+                        Id = Guid.NewGuid(),
+                        MaximumMortgage = calculatedMaximumMortgage,
+                        UserId = user.Id
+                    };
+
+                    user.Mortgage = mortgage;
+                }
+                else
+                {
+                    user.Mortgage.MaximumMortgage = calculatedMaximumMortgage;
+                }
+
+                await _repository.Commit();
+            }
+        }
     }
 }

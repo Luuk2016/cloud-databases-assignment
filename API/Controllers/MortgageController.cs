@@ -1,7 +1,6 @@
 using System.Net;
 using AutoMapper;
 using LKenselaar.CloudDatabases.Models.DTO;
-using LKenselaar.CloudDatabases.Services;
 using LKenselaar.CloudDatabases.Services.Interfaces;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.Azure.Functions.Worker;
@@ -9,7 +8,7 @@ using Microsoft.Azure.Functions.Worker.Http;
 using Microsoft.Azure.WebJobs.Extensions.OpenApi.Core.Attributes;
 using Microsoft.Extensions.Logging;
 
-namespace cloud_databases_assignment.API.Controllers
+namespace LKenselaar.CloudDatabases.API.Controllers
 {
     public class MortgageController
     {
@@ -25,7 +24,6 @@ namespace cloud_databases_assignment.API.Controllers
 
         [Function("GetMortgage")]
         [OpenApiOperation(operationId: "GetMortgage", tags: new[] { "GetMortgage" }, Summary = "Get a mortgage by id", Description = "This endpoint returns the mortgage by id")]
-        [OpenApiRequestBody("application/json", typeof(CreateUserRequestDTO), Description = "The mortage data.")]
         [OpenApiResponseWithBody(statusCode: HttpStatusCode.OK, contentType: "application/json", bodyType: typeof(CreateUserResponseDTO), Description = "The OK response")]
         [OpenApiResponseWithBody(statusCode: HttpStatusCode.NotFound, contentType: "application/json", bodyType: typeof(CreateUserResponseDTO), Description = "The NOT FOUND response")]
         [OpenApiResponseWithBody(statusCode: HttpStatusCode.BadRequest, contentType: "application/json", bodyType: typeof(CreateUserResponseDTO), Description = "The BAD REQUEST response")]

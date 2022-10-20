@@ -4,7 +4,7 @@ using LKenselaar.CloudDatabases.Services.Interfaces;
 
 namespace LKenselaar.CloudDatabases.Services
 {
-    public class MortgageService : Service<Mortgage>, IMortgageService
+    public class MortgageService : Service<Mortgage>
     {
         public MortgageService(IBaseRepository<Mortgage> repository) : base(repository) { }
     }

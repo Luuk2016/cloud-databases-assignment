@@ -43,5 +43,10 @@ namespace LKenselaar.CloudDatabases.DAL.Repositories
 
             return await GetById(entity.Id);
         }
+
+        public async Task Commit()
+        {
+            await _databaseContext.SaveChangesAsync();
+        }
     }
 }

@@ -15,7 +15,7 @@ namespace LKenselaar.CloudDatabases.Services
 
         public virtual async Task<T> GetById(Guid id) => await _repository.GetById(id);
 
-        public virtual async Task<IEnumerable<T>> GetAll() => await _repository.GetAll();
+        public virtual async Task<ICollection<T>> GetAll() => await _repository.GetAll();
 
         public virtual async Task<T> Create(T entity) => await _repository.Create(entity);
 

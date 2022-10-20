@@ -7,6 +7,6 @@ namespace LKenselaar.CloudDatabases.Models
         public string Email { get; set; }
         public double AnnualIncome { get; set; }
         public int LoanTerm { get; set; }
-        public Mortgage Mortage { get; set; }
+        public Mortgage? Mortgage { get; set; }
     }
 }
