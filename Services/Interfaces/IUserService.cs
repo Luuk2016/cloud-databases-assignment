@@ -2,9 +2,7 @@
 
 namespace LKenselaar.CloudDatabases.Services.Interfaces
 {
-    public interface IUserService
+    public interface IUserService : IBaseService<User>
     {
-        Task<User> CreateUser(User user);
-        Task<User> GetUser(Guid id);
     }
 }

@@ -2,9 +2,7 @@
 
 namespace LKenselaar.CloudDatabases.Services.Interfaces
 {
-    public interface IMortgageService
+    public interface IMortgageService : IBaseService<Mortgage>
     {
-        Task<Mortgage> CreateMortage(Mortgage mortgage);
-        Task<Mortgage> GetMortgage(Guid id);
     }
 }

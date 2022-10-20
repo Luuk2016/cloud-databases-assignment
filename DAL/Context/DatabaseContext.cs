@@ -19,8 +19,8 @@ namespace LKenselaar.CloudDatabases.DAL.Context
         protected override void OnModelCreating(ModelBuilder modelBuilder)
         {
             modelBuilder.ApplyConfiguration(new UserEntityTypeConfiguration());
-            modelBuilder.ApplyConfiguration(new MortgageEntityTypeConfiguration());
-        }
+/*            modelBuilder.ApplyConfiguration(new MortgageEntityTypeConfiguration());
+*/        }
 
         protected override void OnConfiguring(DbContextOptionsBuilder optionsBuilder)
         {

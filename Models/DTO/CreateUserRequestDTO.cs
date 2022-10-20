@@ -18,7 +18,7 @@ namespace LKenselaar.CloudDatabases.Models.DTO
         public double AnnualIncome { get; set; }
 
         [JsonRequired]
-        [OpenApiProperty(Default = "240", Description = "The loan term in months")]
+        [OpenApiProperty(Default = "240", Description = "The loan term, in months")]
         public int LoanTerm { get; set; }
     }
 }

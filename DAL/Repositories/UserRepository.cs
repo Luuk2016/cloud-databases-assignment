@@ -3,8 +3,8 @@ using LKenselaar.CloudDatabases.Models;
 
 namespace LKenselaar.CloudDatabases.DAL.Repositories
 {
-    public class MortgageRepository : BaseRepository<Mortgage>
+    public class UserRepository : BaseRepository<User>
     {
-        public MortgageRepository(DatabaseContext databaseContext) : base(databaseContext) { }
+        public UserRepository(DatabaseContext databaseContext) : base(databaseContext) { }
     }
 }

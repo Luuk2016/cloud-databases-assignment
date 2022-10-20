@@ -1,18 +1,16 @@
-﻿using LKenselaar.CloudDatabases.Models;
+﻿using LKenselaar.CloudDatabases.DAL.Repositories.Interfaces;
+using LKenselaar.CloudDatabases.Models;
 using LKenselaar.CloudDatabases.Services.Interfaces;
 
 namespace LKenselaar.CloudDatabases.Services
 {
-    public class UserService : IUserService
+    public class UserService : Service<User>, IUserService
     {
-        public Task<User> CreateUser(User user)
-        {
-            throw new NotImplementedException();
-        }
+        public UserService(IBaseRepository<User> repository) : base(repository) { }
 
-        public Task<User> GetUser(Guid id)
+        public override async Task<User> Create(User user)
         {
-            throw new NotImplementedException();
+            return await _repository.Create(user);
         }
     }
 }

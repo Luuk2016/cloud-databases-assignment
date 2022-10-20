@@ -4,12 +4,13 @@ using LKenselaar.CloudDatabases.Models;
 
 namespace LKenselaar.CloudDatabases.DAL.EntityTypeConfigurations
 {
-    public class MortgageEntityTypeConfiguration : IEntityTypeConfiguration<Mortgage>
+    public class UserEntityTypeConfiguration : IEntityTypeConfiguration<User>
     {
-        public void Configure(EntityTypeBuilder<Mortgage> builder)
+        public void Configure(EntityTypeBuilder<User> builder)
         {
             builder
-                .ToContainer("Mortgages")
+                .ToContainer("Users")
+                .HasNoDiscriminator()
                 .HasPartitionKey(u => u.Id);
         }
     }

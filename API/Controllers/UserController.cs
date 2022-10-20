@@ -1,14 +1,14 @@
 using System.Net;
 using AutoMapper;
+using LKenselaar.CloudDatabases.Models;
 using LKenselaar.CloudDatabases.Models.DTO;
-using LKenselaar.CloudDatabases.Services;
 using LKenselaar.CloudDatabases.Services.Interfaces;
-using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.Azure.Functions.Worker;
 using Microsoft.Azure.Functions.Worker.Http;
 using Microsoft.Azure.WebJobs.Extensions.OpenApi.Core.Attributes;
 using Microsoft.Extensions.Logging;
+using Newtonsoft.Json;
 
 namespace cloud_databases_assignment.API.Controllers
 {
@@ -30,16 +30,32 @@ namespace cloud_databases_assignment.API.Controllers
         [OpenApiOperation(operationId: "CreateUser", tags: new[] { "CreateUser" }, Summary = "Create a new user", Description = "This endpoint allows the creation of a new user.")]
         [OpenApiRequestBody("application/json", typeof(CreateUserRequestDTO), Description = "The user data.")]
         [OpenApiResponseWithBody(statusCode: HttpStatusCode.Created, contentType: "application/json", bodyType: typeof(CreateUserResponseDTO), Description = "The CREATED response")]
+        [OpenApiResponseWithBody(statusCode: HttpStatusCode.NotFound, contentType: "application/json", bodyType: typeof(CreateUserResponseDTO), Description = "The NOT FOUND response")]
+        [OpenApiResponseWithBody(statusCode: HttpStatusCode.BadRequest, contentType: "application/json", bodyType: typeof(CreateUserResponseDTO), Description = "The BAD REQUEST response")]
         public async Task<IActionResult> CreateUser([HttpTrigger(AuthorizationLevel.Anonymous, "post", Route = "user")] HttpRequestData req)
         {
-            _logger.LogInformation("C# HTTP trigger function processed a request.");
+            string requestBody = await new StreamReader(req.Body).ReadToEndAsync();
 
-            var response = req.CreateResponse(HttpStatusCode.OK);
-            response.Headers.Add("Content-Type", "text/plain; charset=utf-8");
+            try
+            {
+                // Serialize the JSON to a DTO
+                var requestBodyData = JsonConvert.DeserializeObject<CreateUserRequestDTO>(requestBody);
 
-            response.WriteString("Welcome to Azure Functions!");
+                // Map DTO to Entity
+                var user = _mapper.Map<User>(requestBodyData);
 
-            return new OkObjectResult(response);
+                var createdUser = await _userService.Create(user);
+
+                // Map Entity to response DTO
+                var response = _mapper.Map<CreateUserResponseDTO>(createdUser);
+
+                return new OkObjectResult(response);
+            }
+            catch (Exception ex)
+            {
+                _logger.LogError(ex.Message);
+                return new BadRequestObjectResult(ex.Message);
+            }
         }
     }
 }
