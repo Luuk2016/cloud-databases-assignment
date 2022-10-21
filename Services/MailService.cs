@@ -1,13 +1,11 @@
-﻿using cloud_databases_assignment.Services.Interfaces;
-using LKenselaar.CloudDatabases.DAL;
+﻿using LKenselaar.CloudDatabases.DAL;
 using LKenselaar.CloudDatabases.DAL.Repositories;
 using LKenselaar.CloudDatabases.Models;
-using LKenselaar.CloudDatabases.Services;
 using LKenselaar.CloudDatabases.Services.Interfaces;
 using SendGrid;
 using SendGrid.Helpers.Mail;
 
-namespace cloud_databases_assignment.Services
+namespace LKenselaar.CloudDatabases.Services
 {
     public class MailService : IMailService
     {

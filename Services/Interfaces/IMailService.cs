@@ -1,7 +1,6 @@
 ﻿using LKenselaar.CloudDatabases.Models;
-using SendGrid;
 
-namespace cloud_databases_assignment.Services.Interfaces
+namespace LKenselaar.CloudDatabases.Services.Interfaces
 {
     public interface IMailService
     {

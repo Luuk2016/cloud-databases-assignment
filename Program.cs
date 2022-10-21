@@ -10,8 +10,6 @@ using LKenselaar.CloudDatabases.DAL.Repositories.Interfaces;
 using LKenselaar.CloudDatabases.Models;
 using LKenselaar.CloudDatabases.Services.Interfaces;
 using LKenselaar.CloudDatabases.Services;
-using cloud_databases_assignment.Services.Interfaces;
-using cloud_databases_assignment.Services;
 
 namespace LKenselaar.CloudDatabases
 {

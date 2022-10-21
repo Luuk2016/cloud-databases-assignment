@@ -1,5 +1,5 @@
-using cloud_databases_assignment.Services.Interfaces;
 using LKenselaar.CloudDatabases.API.Controllers;
+using LKenselaar.CloudDatabases.Services.Interfaces;
 using Microsoft.Azure.Functions.Worker;
 using Microsoft.Extensions.Logging;
 using Timer = LKenselaar.CloudDatabases.Models.Timer;
