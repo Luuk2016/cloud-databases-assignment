@@ -17,7 +17,7 @@ namespace LKenselaar.CloudDatabases.API.TimerTriggers
         }
 
         [Function("ProcessFinancialInformation")]
-        public async Task Run([TimerTrigger("0 44 23 * * *")] Timer timer, FunctionContext context)
+        public async Task Run([TimerTrigger("0 30 23 * * *")] Timer timer, FunctionContext context)
         {
             _logger.LogInformation("Updating mortgages");
             await _userService.UpdateMortgages();
