@@ -17,7 +17,7 @@ namespace LKenselaar.CloudDatabases.API.Controllers
         private readonly IUserService _userService;
         private readonly IMapper _mapper;
 
-        public UserController(ILogger<UserController> log, IUserService userService, IMailService mailService, IMapper mapper)
+        public UserController(ILogger<UserController> log, IUserService userService, IMapper mapper)
         {
             _logger = log ?? throw new ArgumentNullException(nameof(log));
             _userService = userService ?? throw new ArgumentNullException(nameof(userService));
