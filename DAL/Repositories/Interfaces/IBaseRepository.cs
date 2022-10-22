@@ -1,4 +1,4 @@
-﻿using LKenselaar.CloudDatabases.Models.Interfaces;
+using LKenselaar.CloudDatabases.Models.Interfaces;
 
 namespace LKenselaar.CloudDatabases.DAL.Repositories.Interfaces
 {

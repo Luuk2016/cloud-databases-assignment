@@ -27,7 +27,6 @@ namespace LKenselaar.CloudDatabases.Services
                     {
                         Id = Guid.NewGuid(),
                         MaximumMortgage = calculatedMaximumMortgage,
-                        UserId = user.Id,
                         MailSend = false
                     };
 

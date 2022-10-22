@@ -18,7 +18,5 @@ namespace LKenselaar.CloudDatabases.Services
         public virtual async Task<ICollection<T>> GetAll() => await _repository.GetAll();
 
         public virtual async Task<T> Create(T entity) => await _repository.Create(entity);
-
-        public virtual async Task<T> Update(T entity) => await _repository.Update(entity);
     }
 }

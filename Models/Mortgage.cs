@@ -3,8 +3,19 @@ namespace LKenselaar.CloudDatabases.Models
 {
     public class Mortgage : Entity
     {
-        public double? MaximumMortgage { get; set; }
-        public Guid UserId { get; set; }
+        /// <summary>
+        /// The maximum mortgage
+        /// </summary>
+        public double MaximumMortgage { get; set; }
+
+        /// <summary>
+        /// The UserId of the mortgage
+        /// </summary>
+        // public Guid UserId { get; set; }
+
+        /// <summary>
+        /// If the mortgage email has already been send
+        /// </summary>
         public bool MailSend { get; set; }
     }
 }
