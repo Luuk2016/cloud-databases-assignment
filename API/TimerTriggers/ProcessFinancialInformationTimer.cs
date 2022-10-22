@@ -1,6 +1,7 @@
 using LKenselaar.CloudDatabases.Services.Interfaces;
 using Microsoft.Azure.Functions.Worker;
 using Microsoft.Extensions.Logging;
+using Timer = LKenselaar.CloudDatabases.Models.Timer;
 
 namespace LKenselaar.CloudDatabases.API.TimerTriggers
 {
@@ -16,7 +17,7 @@ namespace LKenselaar.CloudDatabases.API.TimerTriggers
         }
 
         [Function("ProcessFinancialInformation")]
-        public async Task Run([TimerTrigger("0 30 23 * * *")] Timer timer)
+        public async Task Run([TimerTrigger("0 44 23 * * *")] Timer timer, FunctionContext context)
         {
             _logger.LogInformation("Updating mortgages");
             await _userService.UpdateMortgages();
