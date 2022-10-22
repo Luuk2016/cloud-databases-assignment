@@ -38,7 +38,7 @@ namespace LKenselaar.CloudDatabases
                     services.AddScoped<IUserService, UserService>();
 
                     services.AddScoped<IBaseRepository<Mortgage>, MortgageRepository>();
-                    services.AddScoped<MortgageService>();
+                    services.AddScoped<IMortgageService, MortgageService>();
 
                     services.AddScoped<IMailService, MailService>();
 
