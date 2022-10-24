@@ -20,6 +20,7 @@ namespace LKenselaar.CloudDatabases.API.TimerTriggers
         [Function("MailResults")]
         public void Run([TimerTrigger("0 0 8 * * *")] Timer timer)
         {
+            _logger.LogInformation("Mailing users");
             _mailService.MailAllUsers();
         }
     }
