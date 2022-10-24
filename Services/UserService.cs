@@ -27,6 +27,7 @@ namespace LKenselaar.CloudDatabases.Services
                     {
                         Id = Guid.NewGuid(),
                         MaximumMortgage = calculatedMaximumMortgage,
+                        ExpiresAt = DateTime.Now.AddDays(1),
                         MailSend = false
                     };
 

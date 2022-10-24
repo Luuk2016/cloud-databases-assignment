@@ -9,9 +9,9 @@ namespace LKenselaar.CloudDatabases.Models
         public double MaximumMortgage { get; set; }
 
         /// <summary>
-        /// The UserId of the mortgage
+        /// The moment the mortgage offer expires
         /// </summary>
-        // public Guid UserId { get; set; }
+        public DateTime ExpiresAt { get; set; }
 
         /// <summary>
         /// If the mortgage email has already been send
