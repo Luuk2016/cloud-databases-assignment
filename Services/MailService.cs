@@ -26,13 +26,13 @@ namespace LKenselaar.CloudDatabases.Services
 
             // Set the email details
             SendGridClient client = new SendGridClient(_config.SendgridAPIKey);
-            EmailAddress sender = new EmailAddress("646234@student.inholland.nl");
+            EmailAddress sender = new EmailAddress("luuk@lkenselaar.dev");
             string subject = "BuyMyHouse - calculated mortgage";
             EmailAddress receiver = new EmailAddress(user.Email);
 
-            string contentPlaintext = $"Beste {user.Name}, klik op de onderstaande link om de gegevens van uw berekende hypotheek te zien. Deze link is 24 uur geldig.";
+            string contentPlaintext = $"Beste {user.Name}, klik op de onderstaande link om de gegevens van uw berekende hypotheek te zien. Deze link is 24 uur geldig. http://localhost:7071/api/mortgage?mortgageId={mortgage.Id}";
 
-            string contentHTML = $"Beste {user.Name}, <br> klik op de onderstaande link om de gegevens van uw berekende hypotheek te zien.<br>Deze link is 24 uur geldig.<br><a href='http://localhost:7071/api/mortgage?mortgageId={mortgage.Id}'";
+            string contentHTML = $"Beste {user.Name}, <br> klik op de onderstaande link om de gegevens van uw berekende hypotheek te zien. Deze link is 24 uur geldig.<br><a href='http://localhost:7071/api/mortgage?mortgageId={mortgage.Id}'>Klik hier</a>";
 
             SendGridMessage message = MailHelper.CreateSingleEmail(sender, receiver, subject, contentPlaintext, contentHTML);
 
@@ -41,6 +41,7 @@ namespace LKenselaar.CloudDatabases.Services
             if (response.IsSuccessStatusCode)
             {
                 user.Mortgage.MailSend = true;
+                await _userRepository.Commit();
             }
         }
 
