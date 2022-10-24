@@ -35,9 +35,11 @@ namespace LKenselaar.CloudDatabases
                     services.AddDbContext<DatabaseContext>();
 
                     services.AddScoped<IBaseRepository<User>, UserRepository>();
+                    services.AddScoped<IUserRepository, UserRepository>();
                     services.AddScoped<IUserService, UserService>();
 
                     services.AddScoped<IBaseRepository<Mortgage>, MortgageRepository>();
+                    services.AddScoped<IMortgageRepository, MortgageRepository>();
                     services.AddScoped<IMortgageService, MortgageService>();
 
                     services.AddScoped<IMailService, MailService>();
