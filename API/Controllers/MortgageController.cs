@@ -29,14 +29,15 @@ namespace LKenselaar.CloudDatabases.API.Controllers
         [OpenApiOperation(operationId: "GetMortgage", tags: new[] { "GetMortgage" }, Summary = "Get a mortgage by id", Description = "This endpoint returns the mortgage by id")]
         [OpenApiParameter(name: "mortgageId", In = ParameterLocation.Path, Required = true)]
         [OpenApiResponseWithBody(statusCode: HttpStatusCode.OK, contentType: "application/json", bodyType: typeof(MortgageResponseDTO), Description = "The OK response")]
-        public async Task<HttpResponseData> GetMortgageById([HttpTrigger(AuthorizationLevel.Anonymous, "get", Route = "mortgage/{mortgageId}")] HttpRequestData req, Guid mortgageId)
+        [OpenApiResponseWithBody(statusCode: HttpStatusCode.BadRequest, contentType: "application/json", bodyType: typeof(string), Description = "The BAD REQUEST response")]
+        public async Task<HttpResponseData> GetMortgageById([HttpTrigger(AuthorizationLevel.Anonymous, "get", Route = "mortgage/{userId}")] HttpRequestData req, Guid userId)
         {
             HttpResponseData response = req.CreateResponse();
 
             try
             {
                 // Get the mortgage
-                Mortgage mortgage = await _mortgageService.GetById(mortgageId);
+                Mortgage mortgage = await _mortgageService.GetMortgageByUserId(userId);
 
                 // Map entity to response DTO
                 MortgageResponseDTO mappedMortgage = _mapper.Map<MortgageResponseDTO>(mortgage);

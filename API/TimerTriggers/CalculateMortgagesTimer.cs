@@ -5,22 +5,22 @@ using Timer = LKenselaar.CloudDatabases.Models.Timer;
 
 namespace LKenselaar.CloudDatabases.API.TimerTriggers
 {
-    public class ProcessFinancialInformationTimer
+    public class CalculateMortgagesTimer
     {
-        private readonly ILogger<MailResultsTimer> _logger;
+        private readonly ILogger<CalculateMortgagesTimer> _logger;
         private readonly IUserService _userService;
 
-        public ProcessFinancialInformationTimer(ILogger<MailResultsTimer> logger, IUserService userService)
+        public CalculateMortgagesTimer(ILogger<CalculateMortgagesTimer> logger, IUserService userService)
         {
             _logger = logger ?? throw new ArgumentNullException(nameof(logger));
             _userService = userService ?? throw new ArgumentNullException(nameof(userService));
         }
 
-        [Function("ProcessFinancialInformation")]
-        public async Task Run([TimerTrigger("0 30 23 * * *")] Timer timer, FunctionContext context)
+        [Function("CalculateMortgagesTimer")]
+        public async Task Run([TimerTrigger("0 30 23 * * *")] Timer timer)
         {
             _logger.LogInformation("Updating mortgages");
-            await _userService.UpdateMortgages();
+            await _userService.CalculateMortgages();
         }
     }
 }

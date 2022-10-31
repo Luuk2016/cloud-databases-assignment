@@ -16,14 +16,12 @@ namespace LKenselaar.CloudDatabases.API.Controllers
     {
         private readonly ILogger<UserController> _logger;
         private readonly IUserService _userService;
-        private readonly IMailService _mailService;
         private readonly IMapper _mapper;
 
-        public UserController(ILogger<UserController> logger, IUserService userService, IMailService mailService, IMapper mapper)
+        public UserController(ILogger<UserController> logger, IUserService userService, IMapper mapper)
         {
             _logger = logger ?? throw new ArgumentNullException(nameof(logger));
             _userService = userService ?? throw new ArgumentNullException(nameof(userService));
-            _mailService = mailService ?? throw new ArgumentNullException(nameof(mailService));
             _mapper = mapper ?? throw new ArgumentNullException(nameof(mapper));
         }
 
@@ -50,10 +48,6 @@ namespace LKenselaar.CloudDatabases.API.Controllers
 
                 // Map entity to response DTO
                 CreateUserResponseDTO mappedCreatedUser = _mapper.Map<CreateUserResponseDTO>(createdUser);
-
-                // TEMP
-                await _userService.UpdateMortgages();
-                await _mailService.SendEmail(user);
 
                 await response.WriteAsJsonAsync(mappedCreatedUser);
             }

@@ -33,17 +33,6 @@ namespace LKenselaar.CloudDatabases.DAL.Repositories
             return await GetById(entity.Id);
         }
 
-        public virtual async Task<T> Update(T entity)
-        {
-            var entry = _databaseContext.Add(entity);
-            entry.State = EntityState.Unchanged;
-
-            _databaseContext.Set<T>().Update(entity);
-            await _databaseContext.SaveChangesAsync();
-
-            return await GetById(entity.Id);
-        }
-
         public async Task Commit()
         {
             await _databaseContext.SaveChangesAsync();

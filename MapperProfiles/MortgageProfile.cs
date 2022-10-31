@@ -4,12 +4,11 @@ using LKenselaar.CloudDatabases.Models;
 
 namespace LKenselaar.CloudDatabases.MapperProfiles
 {
-    public class UserProfile : Profile
+    public class MortgageProfile : Profile
     {
-        public UserProfile()
+        public MortgageProfile()
         {
-            CreateMap<CreateUserRequestDTO, User>();
-            CreateMap<User, CreateUserResponseDTO>();
+            CreateMap<Mortgage, MortgageResponseDTO>();
         }
     }
 }

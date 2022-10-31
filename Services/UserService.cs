@@ -19,17 +19,16 @@ namespace LKenselaar.CloudDatabases.Services
             return await _repository.Create(user);
         }
 
-        public async Task UpdateMortgages()
+        public async Task CalculateMortgages()
         {
             foreach (User user in await _repository.GetAll())
             {
-                double calculatedMaximumMortgage = user.AnnualIncome * 5;
-
                 if (user.Mortgage is null)
                 {
                     Mortgage mortgage = new Mortgage()
                     {
-                        MaximumMortgage = calculatedMaximumMortgage,
+                        Id = Guid.NewGuid(),
+                        MaximumMortgage = user.AnnualIncome * 5,
                         ExpiresAt = DateTime.Now.AddDays(1),
                         MailSend = false
                     };
