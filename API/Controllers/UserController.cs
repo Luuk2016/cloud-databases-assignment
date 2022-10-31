@@ -1,5 +1,6 @@
 using System.Net;
 using AutoMapper;
+using LKenselaar.CloudDatabases.CustomExceptions;
 using LKenselaar.CloudDatabases.Models;
 using LKenselaar.CloudDatabases.Models.DTO;
 using LKenselaar.CloudDatabases.Services.Interfaces;
@@ -32,36 +33,39 @@ namespace LKenselaar.CloudDatabases.API.Controllers
         [OpenApiResponseWithBody(statusCode: HttpStatusCode.Created, contentType: "application/json", bodyType: typeof(CreateUserResponseDTO), Description = "The CREATED response")]
         public async Task<HttpResponseData> CreateUser([HttpTrigger(AuthorizationLevel.Anonymous, "post", Route = "user")] HttpRequestData req)
         {
-            HttpResponseData response;
+            HttpResponseData response = req.CreateResponse(HttpStatusCode.Created);
             string requestBody = await new StreamReader(req.Body).ReadToEndAsync();
 
             try
             {
                 // Serialize the JSON to a DTO
-                var requestBodyData = JsonConvert.DeserializeObject<CreateUserRequestDTO>(requestBody);
+                CreateUserRequestDTO requestBodyData = JsonConvert.DeserializeObject<CreateUserRequestDTO>(requestBody);
 
                 // Map DTO to entity
                 User user = _mapper.Map<User>(requestBodyData);
 
                 // Create the new user
-                var createdUser = await _userService.Create(user);
+                User createdUser = await _userService.Create(user);
 
                 // Map entity to response DTO
-                var mappedCreatedUser = _mapper.Map<CreateUserResponseDTO>(createdUser);
+                CreateUserResponseDTO mappedCreatedUser = _mapper.Map<CreateUserResponseDTO>(createdUser);
 
                 // TEMP
                 await _userService.UpdateMortgages();
                 await _mailService.SendEmail(user);
 
-                response = req.CreateResponse(HttpStatusCode.Created);
                 await response.WriteAsJsonAsync(mappedCreatedUser);
+            }
+            catch (CustomException ex)
+            {
+                _logger.LogError(ex.Message);
+                await response.WriteAsJsonAsync(ex.Message, ex.StatusCode);
             }
             catch (Exception ex)
             {
                 _logger.LogError(ex.Message);
-                response = req.CreateResponse(HttpStatusCode.BadRequest);
-                await response.WriteStringAsync(ex.Message);
-            }
+                await response.WriteAsJsonAsync(ex.Message, HttpStatusCode.BadRequest);
+            } 
 
             return response;
         }

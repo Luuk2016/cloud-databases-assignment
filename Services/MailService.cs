@@ -1,4 +1,5 @@
-﻿using LKenselaar.CloudDatabases.DAL;
+﻿using LKenselaar.CloudDatabases.CustomExceptions;
+using LKenselaar.CloudDatabases.DAL;
 using LKenselaar.CloudDatabases.DAL.Repositories.Interfaces;
 using LKenselaar.CloudDatabases.Models;
 using LKenselaar.CloudDatabases.Services.Interfaces;
@@ -42,6 +43,10 @@ namespace LKenselaar.CloudDatabases.Services
             {
                 user.Mortgage.MailSend = true;
                 await _userRepository.Commit();
+            }
+            else
+            {
+                throw new CustomException(ErrorCodes.MailNotSend.Key, string.Format(ErrorCodes.MailNotSend.Value));
             }
         }
 

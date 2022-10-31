@@ -1,6 +1,8 @@
-﻿using LKenselaar.CloudDatabases.DAL.Repositories.Interfaces;
+﻿using LKenselaar.CloudDatabases.CustomExceptions;
+using LKenselaar.CloudDatabases.DAL.Repositories.Interfaces;
 using LKenselaar.CloudDatabases.Models;
 using LKenselaar.CloudDatabases.Services.Interfaces;
+using System.Runtime.InteropServices;
 
 namespace LKenselaar.CloudDatabases.Services
 {
@@ -15,7 +17,14 @@ namespace LKenselaar.CloudDatabases.Services
 
         public async Task<Mortgage> GetMortgageByUserId(Guid userId)
         {
-            return await _mortgageRepository.GetMortgageByUserId(userId);
+            Mortgage mortgage = await _mortgageRepository.GetMortgageByUserId(userId);
+
+            if (mortgage.ExpiresAt < DateTime.UtcNow)
+            {
+                throw new CustomException(ErrorCodes.MortgageExpired.Key, string.Format(ErrorCodes.MortgageExpired.Value));
+            }
+
+            return mortgage;
         }
     }
 }

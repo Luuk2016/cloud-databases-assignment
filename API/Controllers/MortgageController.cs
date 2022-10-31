@@ -1,5 +1,7 @@
 using System.Net;
 using AutoMapper;
+using LKenselaar.CloudDatabases.CustomExceptions;
+using LKenselaar.CloudDatabases.Models;
 using LKenselaar.CloudDatabases.Models.DTO;
 using LKenselaar.CloudDatabases.Services.Interfaces;
 using Microsoft.Azure.Functions.Worker;
@@ -29,24 +31,27 @@ namespace LKenselaar.CloudDatabases.API.Controllers
         [OpenApiResponseWithBody(statusCode: HttpStatusCode.OK, contentType: "application/json", bodyType: typeof(CreateUserResponseDTO), Description = "The OK response")]
         public async Task<HttpResponseData> GetMortgageById([HttpTrigger(AuthorizationLevel.Anonymous, "get", Route = "mortgage/{mortgageId}")] HttpRequestData req, Guid mortgageId)
         {
-            HttpResponseData response;
+            HttpResponseData response = req.CreateResponse();
 
             try
             {
                 // Get the mortgage
-                var mortgage = await _mortgageService.GetById(mortgageId);
+                Mortgage mortgage = await _mortgageService.GetById(mortgageId);
 
                 // Map entity to response DTO
-                var mappedMortgage = _mapper.Map<MortgageResponseDTO>(mortgage);
+                MortgageResponseDTO mappedMortgage = _mapper.Map<MortgageResponseDTO>(mortgage);
 
-                response = req.CreateResponse(HttpStatusCode.OK);
                 await response.WriteAsJsonAsync(mappedMortgage);
+            }
+            catch (CustomException ex)
+            {
+                _logger.LogError(ex.Message);
+                await response.WriteAsJsonAsync(ex.Message, ex.StatusCode);
             }
             catch (Exception ex)
             {
                 _logger.LogError(ex.Message);
-                response = req.CreateResponse(HttpStatusCode.BadRequest);
-                await response.WriteStringAsync(ex.Message);
+                await response.WriteAsJsonAsync(ex.Message, HttpStatusCode.BadRequest);
             }
 
             return response;
