@@ -1,12 +1,18 @@
 ﻿using LKenselaar.CloudDatabases.DAL.Repositories.Interfaces;
 using LKenselaar.CloudDatabases.Models;
 using LKenselaar.CloudDatabases.Services.Interfaces;
+using Microsoft.Extensions.Logging;
 
 namespace LKenselaar.CloudDatabases.Services
 {
     public class UserService : Service<User>, IUserService
     {
-        public UserService(IBaseRepository<User> repository) : base(repository) { }
+        private readonly ILogger<UserService> _logger;
+
+        public UserService(ILogger<UserService> logger, IBaseRepository<User> repository) : base(repository) 
+        {
+            _logger = logger ?? throw new ArgumentNullException(nameof(logger));
+        }
 
         public override async Task<User> Create(User user)
         {
@@ -15,9 +21,7 @@ namespace LKenselaar.CloudDatabases.Services
 
         public async Task UpdateMortgages()
         {
-            ICollection<User> users = await _repository.GetAll();
-
-            foreach (User user in users.ToList())
+            foreach (User user in await _repository.GetAll())
             {
                 double calculatedMaximumMortgage = user.AnnualIncome * 5;
 
@@ -25,7 +29,6 @@ namespace LKenselaar.CloudDatabases.Services
                 {
                     Mortgage mortgage = new Mortgage()
                     {
-                        Id = Guid.NewGuid(),
                         MaximumMortgage = calculatedMaximumMortgage,
                         ExpiresAt = DateTime.Now.AddDays(1),
                         MailSend = false
@@ -34,6 +37,10 @@ namespace LKenselaar.CloudDatabases.Services
                     user.Mortgage = mortgage;
 
                     await _repository.Commit();
+                }
+                else
+                {
+                    _logger.LogInformation($"UserId: {user.Id} - mortgage has already been set");
                 }
             }
         }

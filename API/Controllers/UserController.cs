@@ -19,9 +19,9 @@ namespace LKenselaar.CloudDatabases.API.Controllers
         private readonly IMailService _mailService;
         private readonly IMapper _mapper;
 
-        public UserController(ILogger<UserController> log, IUserService userService, IMailService mailService, IMapper mapper)
+        public UserController(ILogger<UserController> logger, IUserService userService, IMailService mailService, IMapper mapper)
         {
-            _logger = log ?? throw new ArgumentNullException(nameof(log));
+            _logger = logger ?? throw new ArgumentNullException(nameof(logger));
             _userService = userService ?? throw new ArgumentNullException(nameof(userService));
             _mailService = mailService ?? throw new ArgumentNullException(nameof(mailService));
             _mapper = mapper ?? throw new ArgumentNullException(nameof(mapper));
@@ -31,6 +31,7 @@ namespace LKenselaar.CloudDatabases.API.Controllers
         [OpenApiOperation(operationId: "CreateUser", tags: new[] { "CreateUser" }, Summary = "Create a new user", Description = "This endpoint allows the creation of a new user.")]
         [OpenApiRequestBody("application/json", typeof(CreateUserRequestDTO), Description = "The user data.")]
         [OpenApiResponseWithBody(statusCode: HttpStatusCode.Created, contentType: "application/json", bodyType: typeof(CreateUserResponseDTO), Description = "The CREATED response")]
+        [OpenApiResponseWithBody(statusCode: HttpStatusCode.BadRequest, contentType: "application/json", bodyType: typeof(string), Description = "The BAD REQUEST response")]
         public async Task<HttpResponseData> CreateUser([HttpTrigger(AuthorizationLevel.Anonymous, "post", Route = "user")] HttpRequestData req)
         {
             HttpResponseData response = req.CreateResponse(HttpStatusCode.Created);
